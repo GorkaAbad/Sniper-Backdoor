@@ -6,6 +6,7 @@ from tqdm import tqdm
 import torch
 import os
 from torchvision.models.resnet import ResNet
+from torchvision.models.vgg import VGG
 
 
 class Participant:
@@ -164,6 +165,8 @@ class Server(Participant):
             client.model.eval()
             if type(client.model) == ResNet:
                 hook = client.model.layer4.register_forward_hook(my_hook)
+            elif type(client.model) == VGG:
+                hook = client.model.features[-1].register_forward_hook(my_hook)
             else:
                 hook = client.model.conv3.register_forward_hook(my_hook)
             client.model(test_img)
