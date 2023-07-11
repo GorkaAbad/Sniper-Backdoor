@@ -165,7 +165,7 @@ class Server(Participant):
             client.model.eval()
             if type(client.model) == ResNet:
                 hook = client.model.layer4.register_forward_hook(my_hook)
-            elif type(client.model) == VGG:
+            else if type(client.model) == VGG:
                 hook = client.model.features[-1].register_forward_hook(my_hook)
             else:
                 hook = client.model.conv3.register_forward_hook(my_hook)
